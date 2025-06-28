@@ -6,24 +6,22 @@ const path = require("path");
 
 const app = express();
 app.use(cors());
-app.use(express.json()); // parse JSON
+app.use(express.json());
 
+// API routes
 const taskRoutes = require("./routes/tasks");
 app.use("/api/tasks", taskRoutes);
 
-const PORT = process.env.PORT || 5000;
-
-app.get("/", (req, res) => {
-  res.send("API is running 🚀");
-});
-
+// Serve static files from client build
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
+// SPA fallback — CAREFULLY only for non-api routes
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-
+// Mongo connection
+const PORT = process.env.PORT || 5000;
 
 mongoose
   .connect(process.env.MONGO_URI, {
