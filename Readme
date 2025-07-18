@@ -1,0 +1,77 @@
+# 🦿 Small Leg Localization in Circular Components using OpenCV
+
+This project focuses on **localizing small elliptical legs** in high-contrast circular component images using classical computer vision techniques. The system detects these small legs and visually highlights them on the original image.
+
+## 📁 Project Structure
+
+```
+small-leg-localization/
+├── images/                # Folder containing input images
+├── outputs/               # Output images with detected legs
+├── detect_small_legs.py   # Main detection script
+├── requirements.txt       # Python dependencies
+└── README.md              # Project documentation
+```
+
+## 🔧 Features
+
+- 🔍 Detects circular regions (main body of the component)
+- 🟢 Fits ellipses to small protrusions ("legs") around the circle
+- 🎯 Filters using area, aspect ratio, and angle to identify valid legs
+- 🖼️ Visualizes all detected legs with **green ellipses** on the original image
+
+## 🛠️ Setup Instructions
+
+### 1. Open the project folder in VS code
+
+### 2. Create a Virtual Environment (Recommended)
+```bash
+python -m venv .venv
+.\.venv\Scripts\activate   # On Windows
+# or
+source .venv/bin/activate  # On Linux/macOS
+```
+
+### 3. Install Dependencies
+```bash
+pip install opencv-python numpy
+```
+
+## 🖼️ Input Format
+
+- High-contrast images with:
+  - A large central **circle** (the component)
+  - Multiple **small elliptical protrusions** (legs)
+
+Add your input images inside the `images/` folder.
+
+## ▶️ How to Run
+
+```bash
+python detect_small_legs.py
+```
+
+- All images in the `images/` folder will be processed.
+- Results with green ellipses (detected legs) are saved in the `outputs/` folder.
+
+Script Entry Point
+------------------
+The script starts with the `process_image` function, called inside the `__main__` block. It loops through images, detects main circle, masks, thresholds, and finds ellipses.
+
+Customization
+-------------
+- You can adjust parameters like:
+  - `min_area`, `max_area` in `find_elliptical_legs()`
+  - `minRadius` in `detect_main_circle()`
+  - `blockSize`, `C` in `threshold_image()`
+
+## 📈 Future Improvements
+
+- Replace classical methods with **deep learning** for better generalization.
+- Export coordinates of legs for CAD integration.
+- Add support for batch export of results in CSV/JSON.
+
+
+Author
+------
+Meghana S
